@@ -7,7 +7,7 @@
   "divider_ratio_measured": null,
   "vs_nominal_v": 5.0,
   "vs_measured_v": null,
-  "sensor_model": "MPXV7002DP (theo hàm truyền 0.2P+0.5 — CẦN XÁC NHẬN với Nhung)",
+  "sensor_model": "MPXV7002DP (NXP, Case 1351-01, ±2 kPa) — xác nhận theo BOM của Nhung 05/11/2026",
   "sensor_offset_frac": 0.5,
   "sensor_sens_per_kpa": 0.2,
   "zero_adc": 2068,

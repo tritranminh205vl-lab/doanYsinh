@@ -15,7 +15,7 @@
     "sensor_model":           { "type": "string", "description": "Mã cảm biến thực gắn trên bo — cần Nhung xác nhận" },
     "sensor_offset_frac":     { "type": "number", "description": "Hàm truyền Vout = Vs*(sens*P_kPa + offset). MPXV7002DP: 0.5" },
     "sensor_sens_per_kpa":    { "type": "number", "exclusiveMinimum": 0, "description": "MPXV7002DP: 0.2 /kPa" },
-    "zero_adc":               { "type": "integer", "minimum": 1900, "maximum": 2200 },
+    "zero_adc":               { "type": "integer", "minimum": 1800, "maximum": 2350, "description": "MPXV7002DP offset 2.25–2.75 V ở Vs=5 V -> 1861–2275 count sau phân áp 2/3; danh định 2068" },
     "zero_samples":           { "type": "integer", "minimum": 100 },
     "zero_max_std_count":     { "type": "number", "exclusiveMinimum": 0 },
     "filter_placement":       { "type": "string", "enum": ["pre_model", "post_model"] },

@@ -81,10 +81,10 @@ Mọi tham số phần cứng đọc từ config; không hardcode trong mã. Sch
 | divider_ratio_measured | number \| null |  | null (chờ đo) | **Nhung** |
 | vs_nominal_v | number (5.0) | ✔ | 5.0 | Nhung |
 | vs_measured_v | number 4.5–5.5 \| null |  | null (chờ đo) | **Nhung** |
-| sensor_model | string |  | cần xác nhận | **Nhung / Trí** |
+| sensor_model | string |  | MPXV7002DP (đã chốt) | Nhung |
 | sensor_offset_frac | number | ✔ | 0.5 | datasheet |
 | sensor_sens_per_kpa | number > 0 | ✔ | 0.2 | datasheet |
-| zero_adc | integer 1900–2200 | ✔ | 2068 (chỉ dự phòng; luôn đo zero động) | Việt |
+| zero_adc | integer 1800–2350 | ✔ | 2068 (chỉ dự phòng; luôn đo zero động) | Việt |
 | zero_samples, zero_max_std_count | integer, number |  | 500, 5.0 | Việt |
 | filter_placement | pre_model \| post_model | ✔ | pre_model | Việt |
 | filter_live, filter_offline, ma_window, butter_*, savgol_* | enum / số |  | MA 5 / Butterworth 2, 15 Hz | Việt |
@@ -101,10 +101,10 @@ Kiểm chứng: `python -m pytest tests/test_config.py -v` — config mặc đ�
 
 ## 5. Điểm còn mở
 
-1. **Mã cảm biến.** Sổ tay ghi MPX5010DP nhưng dùng hàm truyền 0.2·P + 0.5 (của MPXV7002DP, ±2 kPa).
-   MPX5010DP có hàm truyền Vout = Vs·(0.09·P + 0.04), dải 0–10 kPa. Cần Nhung/Trí xác nhận linh kiện
-   thực tế; nếu là MPX5010DP thì đổi `sensor_offset_frac = 0.04`, `sensor_sens_per_kpa = 0.09` và
-   khoảng `zero_adc`.
+1. **Mã cảm biến — đã chốt.** BOM của Nhung (05/11/2026) xác nhận MPXV7002DP (Case 1351-01, ±2 kPa),
+   khớp hàm truyền 0.2·P + 0.5 đang dùng. Chữ "MPX5010DP" trong sổ tay là nhầm. Vi điều khiển trên BOM là
+   STM32F103C8T6 (sổ tay ghi STM32F401) — không ảnh hưởng phần mềm nếu firmware giữ đúng protocol_v1
+   và `t_us` là bộ đếm µs 32 bit tràn tại 2³².
 2. Nhung đo và điền `divider_ratio_measured`, `vs_measured_v`.
 3. Quang xác nhận cách tính checksum (ví dụ trong sổ tay ghi `74`, XOR thực của
    `DAT,105,210000,2234` là `4D`).
