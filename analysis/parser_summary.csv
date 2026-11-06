@@ -1,0 +1,17 @@
+item,expected,counted,pass
+lines_total,1499,1499,ĐẠT
+packets_valid,1494,1494,ĐẠT
+lines_rejected,4,4,ĐẠT
+TRUNCATED_LINE,2,2,ĐẠT
+BAD_FORMAT,1,1,ĐẠT
+CORRUPTED_PACKET,1,1,ĐẠT
+SEQ_DROP,3,3,ĐẠT
+SEQ_DUPLICATE,1,1,ĐẠT
+SEQ_OUT_OF_ORDER,0,0,ĐẠT
+TS_WRAP,1,1,ĐẠT
+TS_DISCONTINUITY,1,1,ĐẠT
+NEW_SESSION_MCU_RESET,1,1,ĐẠT
+ADC_SATURATED,1,1,ĐẠT
+samples_lost,6,6,ĐẠT
+sessions,3,3,ĐẠT
+session_lengths,"[994, 200, 300]","[994, 200, 300]",ĐẠT

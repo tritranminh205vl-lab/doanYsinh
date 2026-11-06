@@ -1,0 +1,29 @@
+# errors.log — parser protocol_v1 — nguồn: data/sample/parser_testset.csv
+line 102: TRUNCATED_LINE | '$DAT,100,429366'
+line 103: SEQ_DROP | seq 99->101: mất 1 mẫu
+line 202: CORRUPTED_PACKET | chk nhận 1F ≠ tính 45
+line 203: SEQ_DROP | seq 199->201: mất 1 mẫu
+line 302: SEQ_DROP | seq 299->304: mất 4 mẫu
+line 399: SEQ_DUPLICATE | seq 400 lặp: bỏ gói
+line 500: TRUNCATED_LINE | '\x00��\x13garbage@@!!'
+line 551: BAD_FORMAT | trường số không hợp lệ: '$DAT,551,xx,2068,00*'
+line 601: ADC_SATURATED | adc=4095 chạm biên
+line 751: TS_WRAP | t_us 4294965296->0, cộng 2^32
+line 1001: TS_DISCONTINUITY | t_us lùi 498000->0 (seq 999->1000): mở phiên mới
+line 1201: NEW_SESSION_MCU_RESET | t_us 398000->5000, seq 1199->0: mở phiên mới
+# ---- tổng kết ----
+# lines_total = 1499
+# packets_valid = 1494
+# lines_rejected = 4
+# TRUNCATED_LINE = 2
+# BAD_FORMAT = 1
+# CORRUPTED_PACKET = 1
+# SEQ_DROP = 3
+# SEQ_DUPLICATE = 1
+# SEQ_OUT_OF_ORDER = 0
+# TS_WRAP = 1
+# TS_DISCONTINUITY = 1
+# NEW_SESSION_MCU_RESET = 1
+# ADC_SATURATED = 1
+# samples_lost = 6
+# sessions = 3
