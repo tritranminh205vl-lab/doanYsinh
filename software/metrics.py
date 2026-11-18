@@ -32,6 +32,7 @@ class Metrics:
     plateau_dv_l: float = np.nan
     q_before_end_lps: float = np.nan
     flow_at_record_end: bool = False   # bản ghi kết thúc khi vẫn còn dòng
+    abrupt_drop: bool = False          # Q tụt từ ≥ 1.0 L/s xuống ≤ 0.3 L/s trong 50 ms và không hồi lại
 
     def as_dict(self):
         return asdict(self)
@@ -39,6 +40,30 @@ class Metrics:
 
 def _interp(t, y, tq):
     return float(np.interp(tq, t, y))
+
+
+def detect_abrupt_drop(t, q, i_from, fs_hint=None, q_hi=1.0, q_lo=0.3, window_s=0.05, hold_s=0.20) -> bool:
+    """Dừng đột ngột: sau PEF có mẫu Q ≥ q_hi mà trong window_s sau đó Q ≤ q_lo,
+    và trung bình Q trong hold_s tiếp theo vẫn ≤ q_lo (phân biệt với ho, sau ho dòng thở hồi lại).
+
+    Không phụ thuộc điểm "kết thúc thở" nên không bị gai nhiễu sau khi tắt dòng đánh lừa.
+    """
+    t = np.asarray(t, dtype=np.float64)
+    q = np.asarray(q, dtype=np.float64)
+    if t.size < 3:
+        return False
+    dt = float(np.median(np.diff(t)))
+    nw, nh = max(1, int(round(window_s / dt))), max(1, int(round(hold_s / dt)))
+    hi = np.flatnonzero(q[i_from:] >= q_hi) + i_from
+    if hi.size == 0:
+        return False
+    i = int(hi[-1])                                   # lần cuối cùng dòng còn ≥ q_hi
+    seg = q[i + 1:i + 1 + nw]
+    if seg.size == 0 or seg.min() > q_lo:
+        return False
+    j = i + 1 + int(np.argmax(seg <= q_lo))
+    after = q[j:j + nh]
+    return after.size >= nh // 2 and float(after.mean()) <= q_lo
 
 
 def compute_metrics(t_s, q, v, q_start: float = 0.5, search_from_s: float = 0.0,
@@ -98,4 +123,5 @@ def compute_metrics(t_s, q, v, q_start: float = 0.5, search_from_s: float = 0.0,
         fev1_fvc_pct=(100.0 * fev1 / fvc) if fvc > 0 else np.nan,
         t_end_s=t_end, fet_s=t_end - t0, plateau_dv_l=plateau_dv, q_before_end_lps=q_before_end,
         flow_at_record_end=bool(reached_end),
+        abrupt_drop=detect_abrupt_drop(t, q, i_pef),
     )
