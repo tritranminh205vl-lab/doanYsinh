@@ -1,0 +1,5 @@
+variant,f_minus3dB_Hz,gain_at_15Hz_dB,gain_at_50Hz_dB,group_delay_1Hz_ms,delay50_ms,rise_10_90_ms,overshoot_pct,undershoot_pre_pct,square_delay50_ms,pef_true,pef_filtered,pef_error_pct,peak_time_shift_ms
+MA N=5 (Live),45.0432,-0.311025,-3.77905,4,4,8,0,0,6,8,7.95554,-0.555793,6
+Butterworth lfilter (Live),15.0003,-3.0103,-21.4796,15.0272,15.208,22.827,4.383,0,17.208,8,7.92404,-0.94946,26
+Butterworth filtfilt (Offline),12.0769,-6.0206,-42.9593,0,0,29.918,3.382,3.382,2,8,7.85328,-1.834,12
+Savitzky–Golay (Offline),49.335,-0.0317408,-3.17056,0,0,8.499,8.392,8.392,2,8,7.98179,-0.22757,2
