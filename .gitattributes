@@ -1,0 +1,6 @@
+# Giữ nguyên từng byte của dữ liệu để mã SHA-256 trong manifest luôn khớp (không đổi LF/CRLF)
+data/** -text
+analysis/*.csv -text
+*.pdf binary
+*.png binary
+*.svg -text
